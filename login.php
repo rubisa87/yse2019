@@ -43,10 +43,14 @@ if (isset($_POST["decision"])) {
 	$errormess=$errormess."パスワード未入力です<br>";
 	}
 	}
+
+
+	
 }
 
+
 //⑦名前が入力されているか判定する。入力されていた場合はif文の中に入る
-if (isset($_POST["name"]) and isset($_POST["pass"])) {
+if (isset($_POST["name"]) & isset($_POST["pass"])) {
 	//⑧名前に「yse」、パスワードに「2019」と設定されているか確認する。設定されていた場合はif文の中に入る
 	if (($name==$db["name"]) &($pass==$db["pass"])){
 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
