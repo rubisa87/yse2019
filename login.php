@@ -44,9 +44,6 @@ if (isset($_POST["decision"])) {
 	$errormess=$errormess."パスワード未入力です<br>";
 	}
 	}
-
-
-	
 }
 
 
