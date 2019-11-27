@@ -11,18 +11,27 @@
 */
 
 //①セッションを開始する
+	session_start();
+	$db['host']="localhost";
+	$db['dbname']="zaiko2019_yse";
+	$db['username']= "zaiko2019_yse";
+	$db['pass']= "2019zaiko";
+
 
 //②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-// if (/* ②の処理を書く */){
+if ($_SESSION['login']==False){
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
-	//④ログイン画面へ遷移する。
-// }
+	$_SESSION['error2'] ="ログインしてください";
+	header("Location: login.php");//④ログイン画面へ遷移する。
+}
 
 //⑤データベースへ接続し、接続情報を変数に保存する
-
 //⑥データベースで使用する文字コードを「UTF8」にする
-
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
+
+  // $pdo = new PDO("mysql:host=$db['host'];dbname=$db['dbname'];charset=utf8;",$db['username'], $db['pass'] );
+  $pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
+    $st = $pdo->query("SELECT * FROM books ");
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -54,7 +63,7 @@
 			<div id="left">
 				<p id="ninsyou_ippan">
 					<?php
-						echo @$_SESSION["account_name"];
+						echo @$_SESSION["NAME"];
 					?><br>
 					<button type="button" id="logout" onclick="location.href='logout.php'">ログアウト</button>
 				</p>
@@ -81,20 +90,20 @@
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						// while(/* ⑩の処理を書く */){
-							//⑪extract変数を使用し、1レコードのデータを渡す。
+						while($extract=$st->fetch()){
+							// ⑪extract変数を使用し、1レコードのデータを渡す。
 
-							// echo "<tr id='book'>";
-							// echo "<td id='check'><input type='checkbox' name='books[]'value="./* ⑫IDを設定する */."></td>";
-							// echo "<td id='id'>/* ⑬IDを表示する */</td>";
-							// echo "<td id='title'>/* ⑭titleを表示する */</td>";
-							// echo "<td id='author'>/* ⑮authorを表示する */</td>";
-							// echo "<td id='date'>/* ⑯salesDateを表示する */</td>";
-							// echo "<td id='price'>/* ⑰priceを表示する */</td>";
-							// echo "<td id='stock'>/* ⑱stockを表示する */</td>";
+							echo "<tr id='book'>";
+							echo "<td id='check'><input type='checkbox' name='books[]'value=".$extract['id']."></td>";
+							echo "<td id='id'>".$extract['id']."</td>";
+							echo "<td id='title'>".$extract['title']."</td>";
+							echo "<td id='author'>".$extract['author']."</td>";
+							echo "<td id='date'>".$extract['salesDate']."</td>";
+							echo "<td id='price'>".$extract['price']."</td>";
+							echo "<td id='stock'>".$extract['stock']."</td>";
 
-							// echo "</tr>";
-						// }
+							echo "</tr>";
+						}
 						?>
 					</tbody>
 				</table>
