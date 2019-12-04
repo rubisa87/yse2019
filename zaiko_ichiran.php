@@ -58,9 +58,13 @@ if ($_SESSION['login']==False){
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
 				 */ 
-				// if(/* ⑧の処理を書く */){
+								// echo $_SESSION["success"];
+
+				if(@($_SESSION["success"])){
 					//⑨SESSIONの「success」の中身を表示する。
-				// }
+					echo "chua chon sach";
+				echo $_SESSION["success"];
+				}
 				?>
 			</div>
 			
@@ -96,8 +100,6 @@ if ($_SESSION['login']==False){
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						// while(/* ⑩の処理を書く */){
-							//⑪extract変数を使用し、1レコードのデータを渡す。
 						while($extract=$st->fetch()){
 							// ⑪extract変数を使用し、1レコードのデータを渡す。
 
@@ -109,6 +111,8 @@ if ($_SESSION['login']==False){
 							// echo "<td id='date'>/* ⑯salesDateを表示する */</td>";
 							// echo "<td id='price'>/* ⑰priceを表示する */</td>";
 							// echo "<td id='stock'>/* ⑱stockを表示する */</td>";
+							// echo "</tr>";
+
 							echo "<tr id='book'>";
 							echo "<td id='check'><input type='checkbox' name='books[]'value=".$extract['id']."></td>";
 							echo "<td id='id'>".$extract['id']."</td>";
@@ -118,8 +122,6 @@ if ($_SESSION['login']==False){
 							echo "<td id='price'>".$extract['price']."</td>";
 							echo "<td id='stock'>".$extract['stock']."</td>";
 
-							// echo "</tr>";
-						// }
 							echo "</tr>";
 						}
 						?>

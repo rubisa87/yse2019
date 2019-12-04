@@ -17,7 +17,7 @@ echo @$_SESSION['NAME'];
 
 //①名前とパスワードを入れる変数を初期化する
 	$errormess="";
-	$_SESSION['login'] =False;
+	// $_SESSION['login'] =False;
 	$_SESSION['NAME']=Null;
 
 
@@ -80,6 +80,7 @@ if (!empty($_SESSION['error2'])) {
 <link rel="stylesheet" href="css/login.css" type="text/css" />
 </head>
 <body id="login">
+
 	<div id="main">
 		<h1>ログイン</h1>
 		<?php
