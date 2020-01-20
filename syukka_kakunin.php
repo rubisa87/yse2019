@@ -60,6 +60,7 @@ $con = mysqli_connect("localhost" , "zaiko2019" , "2019zaiko" , "zaiko2019_yse")
 	mysqli_set_charset($con,"UTF8");
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 //⑪POSTの「books」から値を取得し、変数に設定する。
+	$stockdb=0;
 
 foreach($_POST['books'] as $books ){
 	/*
@@ -89,7 +90,7 @@ $total=$dtb['stock']-$stock;
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
 
 	//⑱ ⑰の値が0未満か判定する。0未満の場合はif文の中に入る。
-	if($total>=0){
+	if($total<0){
 		//⑲SESSIONの「error」に「出荷する個数が在庫数を超えています」と設定する。
 		//⑳「include」を使用して「syukka.php」を呼び出す。
 		//㉑「exit」関数で処理を終了する。

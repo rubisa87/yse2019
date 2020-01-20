@@ -35,7 +35,9 @@ if ($_SESSION['login']==False){
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
   // $pdo = new PDO("mysql:host=$db['host'];dbname=$db['dbname'];charset=utf8;",$db['username'], $db['pass'] );
-  $pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
+ // $hostname="172.16.23.13:3306";
+ $hostname="localhost";
+  $pdo = new PDO("mysql:host=$hostname;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
     $st = $pdo->query("SELECT * FROM books ");
 ?>
 <!DOCTYPE html>
