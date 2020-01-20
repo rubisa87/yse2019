@@ -60,7 +60,7 @@ $con = mysqli_connect("localhost" , "zaiko2019" , "2019zaiko" , "zaiko2019_yse")
 	mysqli_set_charset($con,"UTF8");
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 //⑪POSTの「books」から値を取得し、変数に設定する。
-	$stockdb=0;
+	$count=0;
 
 foreach($_POST['books'] as $books ){
 	/*
@@ -74,19 +74,18 @@ foreach($_POST['books'] as $books ){
  //    } else {
  //        echo var_export($element, true) . " is NOT numeric", PHP_EOL;
  //    } -----tham khao den day= yeu cau k bo comment------
-$stock= $_POST['stock'];
-	if (is_numeric($stock)==False) {
+	if (!is_numeric($_POST['stock'][$count])) {
 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
 		//.⑭「include」を使用して「syukkaphp」を呼び出す。
 		//⑮「exit」関数で処理を終了する。
-		$_SESSION['error']="「数値以外が入力されています";
+		$_SESSION['error']="数値以外が入力されています";
 		include 'syukka.php';
 		exit();
-	}
+}
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
-	$dtb=getByid();
-$total=$dtb['stock']-$stock;
+	$dtb=getByid($books,$con);
+$total=$dtb['stock']-$_POST['stock'][$count];
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
 
 	//⑱ ⑰の値が0未満か判定する。0未満の場合はif文の中に入る。
@@ -100,26 +99,37 @@ $total=$dtb['stock']-$stock;
 	}
 	
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
+	$count++;
 }
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-// if(/* ㉓の処理を書く */){
+if(@$_POST['add']=="ok"/* ㉓の処理を書く */){
 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
-
+$count=0;
+$result;
 	//㉕POSTの「books」から値を取得し、変数に設定する。
-	// foreach(/* ㉕の処理を書く */){
+
+	foreach($_POST['books']as $books/* ㉕の処理を書く */){
 		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
 		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
 		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
 		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
-	// }
+		$dtb=getByid($books,$con);
+$total=$dtb['stock']-$_POST['stock'][$count];
+$result=updateByid($books,$con,$total);
+$count++;
+	}
 
 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
-// }
+if($result){
+	$_SESSION['success'] ="入荷が完了しました";
+	header("Location: zaiko_ichiran.php");//④ログイン画面へ遷移する。
+}
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">

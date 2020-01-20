@@ -129,7 +129,7 @@ while($row=$st->fetch() ){
 					<td><?php echo	$a['salesDate'];/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
 					<td><?php echo	$a['price'];/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
 					<td><?php echo	$a['stock'];/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
-					<td><input type='text' name='stock[]' size='5' maxlength='5' required></td>
+					<td><input type='number' name='stock[]' size='5' maxlength='5' required></td>
 				</tr>
 				<?php
 				}
