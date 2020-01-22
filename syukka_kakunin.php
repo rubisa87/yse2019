@@ -35,7 +35,7 @@ function updateByid($id,$con,$total){
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
 	$sql = "UPDATE books SET stock=$total WHERE id=$id";
-		$result = $con->query($sql);
+		return $result = $con->query($sql);
 
 		// if ($result->num_rows > 0) {
 		// 	while($row = $result->fetch_assoc()) {
@@ -79,7 +79,7 @@ foreach($_POST['books'] as $books ){
 		//.⑭「include」を使用して「syukkaphp」を呼び出す。
 		//⑮「exit」関数で処理を終了する。
 		$_SESSION['error']="数値以外が入力されています";
-		include 'syukka.php';
+		include 'nyuka.php';
 		exit();
 }
 
@@ -93,7 +93,7 @@ $total=$dtb['stock']-$_POST['stock'][$count];
 		//⑲SESSIONの「error」に「出荷する個数が在庫数を超えています」と設定する。
 		//⑳「include」を使用して「syukka.php」を呼び出す。
 		//㉑「exit」関数で処理を終了する。
-		$_SESSION['error']="「出荷する個数が在庫数を超えています";
+		$_SESSION['error']="出荷する個数が在庫数を超えています";
 		include 'syukka.php';
 		exit();
 	}
@@ -125,7 +125,10 @@ $count++;
 
 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
+	echo $result;
+
 if($result){
+
 	$_SESSION['success'] ="入荷が完了しました";
 	header("Location: zaiko_ichiran.php");//④ログイン画面へ遷移する。
 }
@@ -156,21 +159,25 @@ if($result){
 				<tbody>
 					<?php 
 					//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
-
+			$count=0;
 					//㉝POSTの「books」から値を取得し、変数に設定する。
 					// foreach(/* ㉝の処理を書く */){
 						//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
+		foreach ($_POST['books'] as $books){
+					$a =getbyId($books,$con);
+
 					?>
 					<tr>
-						<td><?php //echo	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
-						<td><?php //echo	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
-						<td><?php //echo	/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
+						<td><?php echo	$a['title']/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+						<td><?php echo	$a['stock']/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
+						<td><?php echo	$_POST['stock'][$count]/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
-					<input type="hidden" name="books[]" value="<?php //echo /* ㊳ ㉝で取得した値を設定する */;?>">
-					<input type="hidden" name="stock[]" value='<?php //echo /* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
+					<input type="hidden" name="books[]" value="<?php echo $books/* ㊳ ㉝で取得した値を設定する */;?>">
+					<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$count]/* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 					<?php
 						//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
-					//}
+					$count++;
+					}
 					?>
 				</tbody>
 			</table>

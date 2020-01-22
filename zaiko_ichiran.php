@@ -30,8 +30,8 @@ if ($_SESSION['login']==False){
 
 //⑤データベースへ接続し、接続情報を変数に保存する
 
-//⑥データベースで使用する文字コードを「UTF8」にする
-//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
+//
+//⑦書籍テーブル⑥データベースで使用する文字コードを「UTF8」にするから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
   // $pdo = new PDO("mysql:host=$db['host'];dbname=$db['dbname'];charset=utf8;",$db['username'], $db['pass'] );
@@ -64,7 +64,6 @@ if ($_SESSION['login']==False){
 
 				if(@($_SESSION["success"])){
 					//⑨SESSIONの「success」の中身を表示する。
-					echo "chua chon sach";
 				echo $_SESSION["success"];
 				}
 				?>
