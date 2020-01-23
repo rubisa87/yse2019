@@ -153,7 +153,7 @@ if($result){
 					<tr>
 						<th id="book_name">書籍名</th>
 						<th id="stock">在庫数</th>
-						<th id="stock">出荷数</th>
+						<th id="stock">入荷数</th>
 					</tr>
 				</thead>
 				<tbody>
