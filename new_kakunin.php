@@ -1,7 +1,14 @@
 <?php
 
 session_start();
+/*ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+追加機能に対して、新しいカラム追加しました
+カラム名：deleflag 
+データ型　Boolean, デフォルト値　False 或いは
+データ型　TYNYINT デフォルト値　0 
 
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+*/
 function new_product($title,$author,$saleDate,$price,$stock){
 		$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko");
 // $sql = "INSERT INTO books(title,author,salesDate,isbn,price,stock,deleflag) VALUES ($title,$author,$saleDate,$aa,$price,$stock,$aa)";
@@ -13,6 +20,8 @@ function new_product($title,$author,$saleDate,$price,$stock){
 
 	//③実行した結果から1レコード取得し、returnで値を返す。
 }
+
+
 
 if ($_SESSION["login"] ==False){
 	//④SESSIONの「error2」に「ログインしてください」と設定する。
