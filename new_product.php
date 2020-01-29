@@ -58,14 +58,13 @@ if ($_SESSION["login"] ==False){
 			<table>
 					<thead>
 						<tr>
-							<th id="id">ID</th>
-							<th id="book_name">書籍名</th>
-							<th id="author">著者名</th>
-							<th id="salesDate">発売日</th>
-							<th id="itemPrice">金額</th>
-							<th id="stock">在庫数</th>
-							<th id="stock">入荷数</th>
-
+						<th id="id">ID</th>
+						<th id="book_name">書籍名</th>
+						<th id="author">著者名</th>
+						<th id="salesDate">発売日</th>
+						<th id="itemPrice">金額</th>
+						<th id="stock">在庫数</th>
+						<th id="stock">入荷数</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -79,9 +78,11 @@ if ($_SESSION["login"] ==False){
 						?>
 						<tr>
 						<td><?php echo $newid  ?></td>
+						<input type="hidden" name="ID" value="<?php echo $newid;?>">
+
 						<td><input type='text' name='title' size='20' maxlength='11' required></td>
 						<td><input type='text' name='author' size='20' maxlength='11' required></td>
-						<td><input type='date' name='saleDate' size='10' maxlength='11' required></td>
+						<td><input type='text' name='saleDate' size='10' maxlength='11' required></td>
 						<td><input type='text' name='price' size='10' maxlength='11' required></td>
 						<td><input type='text' name='stock' size='10' maxlength='11' required></td>
 						<td><input type='text' name='nyuka' size='10' maxlength='11' required></td>
