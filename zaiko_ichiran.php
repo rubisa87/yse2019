@@ -83,7 +83,7 @@ if ($_SESSION['login']==False){
 				<button type="submit" id="btn1" formmethod="POST" name="decision" value="4" formaction="syukka.php">出荷</button>
 
 				<button type="submit" id="btn1" formmethod="POST" name="decision" value="5" formaction="new_product.php">新商品追加</button>
-				<button type="submit" id="btn1" formmethod="POST" name="decision" value="6" formaction="delete_prpduct.php">商品削除</button>
+				<button type="submit" id="btn1" formmethod="POST" name="decision" value="6" formaction="delete_product.php">商品削除</button>
 
 			</div>
 			<!-- 中央表示 -->
@@ -106,18 +106,7 @@ if ($_SESSION['login']==False){
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
 						while($extract=$st->fetch()){
-							// ⑪extract変数を使用し、1レコードのデータを渡す。
-
-							// echo "<tr id='book'>";
-							// echo "<td id='check'><input type='checkbox' name='books[]'value="./* ⑫IDを設定する */."></td>";
-							// echo "<td id='id'>/* ⑬IDを表示する */</td>";
-							// echo "<td id='title'>/* ⑭titleを表示する */</td>";
-							// echo "<td id='author'>/* ⑮authorを表示する */</td>";
-							// echo "<td id='date'>/* ⑯salesDateを表示する */</td>";
-							// echo "<td id='price'>/* ⑰priceを表示する */</td>";
-							// echo "<td id='stock'>/* ⑱stockを表示する */</td>";
-							// echo "</tr>";
-
+							if($extract['deleflag']==1){continue;}
 							echo "<tr id='book'>";
 							echo "<td id='check'><input type='checkbox' name='books[]'value=".$extract['id']."></td>";
 							echo "<td id='id'>".$extract['id']."</td>";
