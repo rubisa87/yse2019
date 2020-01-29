@@ -4,10 +4,9 @@ session_start();
 
 function new_product($title,$author,$saleDate,$price,$stock){
 		$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko");
-
-$sql = "INSERT INTO books(title,author,salesDate,isbn,price,stock,deleflag) VALUES ($title,$author,$saleDate,0,$price,$stock,0)";
-		 return $result=$pdo->query($sql);
-echo "chay xong dtb";
+// $sql = "INSERT INTO books(title,author,salesDate,isbn,price,stock,deleflag) VALUES ($title,$author,$saleDate,$aa,$price,$stock,$aa)";
+		$a= $pdo->prepare("INSERT INTO books(title,author,salesDate,isbn,price,stock,deleflag) VALUES (?,?,?,?,?,?,?)");
+		 return $result=$a->execute(array($title,$author,$saleDate,0,$price,$stock,0));
 	// $sql = "INSERT INTO books(title,author,saleDate,price,stock) VALUES (?,?,?,?,?)";
 	// 	 $a = $con->prepare($sql);
 	// 	 return $result= $a->execute(array($title,$author,$saleDate,$price,$stock));
