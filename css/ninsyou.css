@@ -257,6 +257,22 @@ tr #tuika{
 	box-shadow: 3px 3px 0 #C54C82;
 	border-style: none;
 }
+#kensaku{
+	width: 200px;
+	height: 54px;
+	margin-top: 20px;
+	/*margin-left: 400px;*/
+	outline: none;
+	font-family:"huifont";
+	font-size: 20px;
+	/*text-align: center;*/
+	background-color: #EC729C;
+	border-radius: 4px;
+	color: #fff;
+	line-height: 52px;
+	box-shadow: 3px 3px 0 #C54C82;
+	border-style: none;
+}
 
 #kakutei:hover{
 	background-color: #f197b6;

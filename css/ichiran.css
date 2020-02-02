@@ -11,10 +11,12 @@ body{
 	margin:auto;
 	background-color:#f4fff9;
 	color:#404040;
+	/*text-align: center;*/
 }
 
 #pagebody{
-	width:1400px;
+	width:1700px;
+	min-height: 800px;
 	margin: auto;
 	background-color: #ffffff;
 	border-left: dashed 2px #d8d8d8;
@@ -76,10 +78,16 @@ li a:hover{
 
 #center {
 	margin: auto;
-	width:1000px;
-	margin-left:170px;
+	/*width:1000px;*/
+	margin-left:10px;
 	padding-bottom: 20px;
 	padding-top: 40px;
+}
+#left{
+	float:left;
+	display:inline-grid;
+	margin-left: 30px;
+	margin-top: 95px;
 }
 
 #page_top{
@@ -144,9 +152,10 @@ li a:hover{
 
 table{
 	text-align: center;
-	width:1200px;
+	width:1400px;
 	border:2px #404040 solid;
 	border-collapse: collapse;
+	margin-left: 20px;
 }
 
 td{
@@ -167,7 +176,7 @@ th button{
 }
 
 #check{
-	width:100px;
+	width:50px;
 }
 
 #sort{
@@ -191,11 +200,12 @@ tr #tuika{
 	height:55
 }
 
-#left{
-	float:left;
-	display:inline-grid;
+
+#right{
+	float:right;
+	/*display:inline-grid;
 	margin-left: 30px;
-	margin-top: 95px;
+	margin-top: 95px;*/
 }
 
 #btn1{
@@ -324,6 +334,26 @@ tr #tuika{
 	height: 30px;
 	outline: none;
 }
+#kensaku{
+	width: 200px;
+	height: 54px;
+	margin-bottom: 20px;
+	/*margin-left: 400px;*/
+	outline: none;
+	font-family:"huifont";
+	font-size: 20px;
+	/*text-align: center;*/
+	background-color: #1abc9c;
+
+	border-radius: 4px;
+	color: #fff;
+	/*line-height: 52px;*/
+	box-shadow: 5px 3px 0 #0e8c73;
+	border-style: none;
+}
+/*#kensaku{
+	padding-left: 20px;
+}*/
 
 #kakutei{
 	width: 200px;
@@ -339,7 +369,7 @@ tr #tuika{
 	box-shadow: 0 3px 0 #0e8c73;
 	border-style: none;
 	margin-top: 20px;
-	margin-left: 400px;
+	margin-left: 700px;
 }
 
 #kakutei:hover{
@@ -424,14 +454,14 @@ tr #tuika{
 	padding-top: 20px;
 }
 
-#kensaku{
-	padding-left: 20px;
-}
+
 
 #kakunin{
 	font-size: 20px;
 	width:1000px;
-	text-align: center;
+	/*text-align: center;*/
+			margin-left: 650px;
+
 }
 
 #message{
@@ -446,6 +476,8 @@ tr #tuika{
 	color: #fff;
 	box-shadow: 3px 3px 0px #0e8c73;
 	border-style: none;
+		/*margin-left: 600px;*/
+
 }
 
 #message:hover{

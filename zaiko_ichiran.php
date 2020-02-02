@@ -1,44 +1,90 @@
 <?php
-/* 
-【機能】
-書籍テーブルより書籍情報を取得し、画面に表示する。
-商品をチェックし、ボタンを押すことで入荷、出荷が行える。
-ログアウトボタン押下時に、セッション情報を削除しログイン画面に遷移する。
 
-【エラー一覧（エラー表示：発生条件）】
-入荷する商品が選択されていません：商品が一つも選択されていない状態で入荷ボタンを押す
-出荷する商品が選択されていません：商品が一つも選択されていない状態で出荷ボタンを押す
-*/
-
-//①セッションを開始する
 	session_start();
 	$db['host']="localhost";
 	$db['dbname']="zaiko2019_yse";
 	$db['username']= "zaiko2019_yse";
 	$db['pass']= "2019zaiko";
+	$saleDate=array(197,198,199,200,201,202);
+	$price=array(400,500,600,700,800,900,1000,2000);
+	$stock= array(10,20,30,40,50);
 
-
-//②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-// if (/* ②の処理を書く */){
 if ($_SESSION['login']==False){
-	//③SESSIONの「error2」に「ログインしてください」と設定する。
-	//④ログイン画面へ遷移する。
-// }
+
 	$_SESSION['error2'] ="ログインしてください";
 	header("Location: login.php");//④ログイン画面へ遷移する。
 }
 
-//⑤データベースへ接続し、接続情報を変数に保存する
-
-//
-//⑦書籍テーブル⑥データベースで使用する文字コードを「UTF8」にするから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
-
-//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
-  // $pdo = new PDO("mysql:host=$db['host'];dbname=$db['dbname'];charset=utf8;",$db['username'], $db['pass'] );
- // $hostname="172.16.23.13:3306";
  $hostname="localhost";
   $pdo = new PDO("mysql:host=$hostname;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
-    $st = $pdo->query("SELECT * FROM books ");
+	$dtb_mae=$dtb="SELECT * FROM books ";
+	$and ="";
+
+	// -----------------検索機能でデータベースに接続する文を作成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+if(!@$_POST['search']){
+	echo "chua bam search";
+}else{
+	echo "da bam nut search<br>";
+	if(@$_POST['nendai'] || @$_POST['endai']||@$_POST['zaiko']||@$_POST['key']){ $dtb = $dtb." where ";}
+
+	if(@$_POST['key']){  $dtb = $dtb."(title like '%".$_POST['key']."%' OR author like '%".$_POST['key']."%') "	;$and=" AND " 	;}
+
+	if(@$_POST['nendai']){  $dtb = $dtb.$and."salesDate like '".$_POST['nendai']."%'"	;$and=" AND " 	;}
+
+	if(@$_POST['endai']){ $dtb=$dtb.$and."price>= ".$_POST['endai']." AND price<".($_POST['endai']+100)	;$and=" AND " 	;}
+
+	if(@$_POST['zaiko']){$dtb=$dtb.$and."stock< ".$_POST['zaiko']	;}
+echo $dtb;
+$dtb_mae=$dtb;
+}
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーソート機能でデータベースに接続する文を作成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+$count['date']=$count['price']=$count['stock']=0;
+$ten="";
+$sankaku['date']=$sankaku['price']=$sankaku['stock']="▼";
+
+if(!@$_POST['sort']){
+	echo "chua bam sort va dtb la:".$dtb;
+}else{  //sort dc bam
+	$dtb_mae=$dtb=$_POST['dtb'];
+	$dtb=$dtb." ORDER BY ";
+	$ten=" , ";
+
+	if($_POST['sort']=="date"){
+		echo "date button selected<br>";
+		$count['date']=$_POST['count_date'];
+		$count['date']++;
+		if ($count['date']%2==0) {
+		 	$dtb=$dtb."salesDate ASC";
+		}else{
+	 		$dtb=$dtb."salesDate DESC";
+	 		$sankaku['date']="▲";
+	 	}
+	}else if($_POST['sort']=="price"){
+		$count['price']=$_POST['count_price'];
+		$count['price']++;
+		if ($count['price']%2==0) {
+		 	$dtb=$dtb."price ASC";
+		}else{
+	 		$dtb=$dtb."price DESC";
+	 		$sankaku['date']="▲";
+	 	}
+	}else if($_POST['sort']=="stock"){
+		$count['stock']=$_POST['count_stock'];
+		$count['stock']++;
+		if ($count['stock']%2==0) {
+		 	$dtb=$dtb."stock ASC";
+		}else{
+	 		$dtb=$dtb."stock DESC";
+	 		$sankaku['date']="▲";
+		}
+	}
+	echo "da bam sort va dtb =".$dtb;
+}
+
+	$st = $pdo->query($dtb);
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -46,22 +92,20 @@ if ($_SESSION['login']==False){
 	<meta charset="UTF-8">
 	<title>書籍一覧</title>
 	<link rel="stylesheet" href="css/ichiran.css" type="text/css" />
+		<!-- <link rel="stylesheet" href="css/ninsyou.css" type="text/css" /> -->
+
 </head>
 <body>
 	<div id="header">
 		<h1>書籍一覧</h1>
 	</div>
 	<form action="zaiko_ichiran.php" method="post" id="myform" name="myform">
+					<!-- 左メニュー -->
+
+			
 		<div id="pagebody">
-			<!-- エラーメッセージ表示 -->
 			<div id="error">
 				<?php
-				/*
-				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
-				 * 設定されていた場合はif文の中に入る。
-				 */ 
-								// echo $_SESSION["success"];
-
 				if(@($_SESSION["success"])){
 					//⑨SESSIONの「success」の中身を表示する。
 				echo $_SESSION["success"];
@@ -69,8 +113,44 @@ if ($_SESSION['login']==False){
 				?>
 			</div>
 			
-			<!-- 左メニュー -->
-			<div id="left">
+
+			<div id="menu"><form>
+			<nav>
+			<ul>
+				<li>
+					<table style ="width:800px;">
+					<thead>
+						<tr>
+							<th id="" >キーワード</th>
+							<th id="saleDate">発売年代</th>
+							<th id="price"　>金額</th>
+							<th id="stock"　>在庫</th>
+						
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr>
+							<td id="" ><input type="text" name="key"></td>
+							<td id="" ><select name="nendai"><?php echo "<option></option>"; foreach($saleDate as $date) {echo "<option value=".$date.">".$date."0年代</option>"; }?></select></td>
+							<td id="" ><select name="endai"><?php echo "<option></option>"; foreach($price as $price) {echo "<option value=".$price.">".$price."円代</option>"; }?></select></td>
+							<td id="" ><select name="zaiko"><?php echo "<option></option>"; foreach($stock as $stock) {echo "<option value=".$stock.">".$stock."冊未満</option>"; }echo "<option>".$stock."冊以上</option>";　?></select></td>
+						</tr>
+					</tbody>
+				</table>
+				</li>
+				<li><div id="right"><button type="submit" id="kensaku" formmethod="POST" name="search" value="7" >検索</button></div> </li>
+			</ul>
+		</nav>
+	</form>
+
+	</div>
+	
+			<!-- 中央表示 -->
+			<div id="center" >
+<!-- style="float:right;" -->
+				 <!-- 書籍一覧の表示 -->
+				 <div id="left">
 				<p id="ninsyou_ippan">
 					<?php
 						echo @$_SESSION["account_name"];
@@ -84,12 +164,7 @@ if ($_SESSION['login']==False){
 
 				<button type="submit" id="btn1" formmethod="POST" name="decision" value="5" formaction="new_product.php">新商品追加</button>
 				<button type="submit" id="btn1" formmethod="POST" name="decision" value="6" formaction="delete_product.php">商品削除</button>
-
 			</div>
-			<!-- 中央表示 -->
-			<div id="center">
-
-				<!-- 書籍一覧の表示 -->
 				<table>
 					<thead>
 						<tr>
@@ -97,9 +172,13 @@ if ($_SESSION['login']==False){
 							<th id="id">ID</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
-							<th id="salesDate">発売日</th>
-							<th id="itemPrice">金額</th>
-							<th id="stock">在庫数</th>
+							<th width ="10px" id="salesDate">発売日<button type="submit" formmethod="POST" name ="sort" value="date"><?php echo $sankaku["date"]; ?></button></th>
+							<th width ="80px" id="itemPrice">金額<button type="submit" formmethod="POST" name ="sort" value="price"><?php echo $sankaku["price"]; ?></button></th>
+							<th width ="120px" id="stock">在庫数<button type="submit" formmethod="POST" name ="sort" value="stock"><?php echo $sankaku["stock"]; ?></button></th>
+							<input type="hidden" name="dtb" value="<?php echo $dtb_mae;?>">
+							<input type="hidden" name="count_date" value="<?php echo $count['date'];?>">
+							<input type="hidden" name="count_price" value="<?php echo $count['price'];?>">
+							<input type="hidden" name="count_stock" value="<?php echo $count['stock'];?>">
 						</tr>
 					</thead>
 					<tbody>
