@@ -67,7 +67,7 @@ if(!@$_POST['sort']){
 		 	$dtb=$dtb."price ASC";
 		}else{
 	 		$dtb=$dtb."price DESC";
-	 		$sankaku['date']="▲";
+	 		$sankaku['price']="▲";
 	 	}
 	}else if($_POST['sort']=="stock"){
 		$count['stock']=$_POST['count_stock'];
@@ -76,7 +76,7 @@ if(!@$_POST['sort']){
 		 	$dtb=$dtb."stock ASC";
 		}else{
 	 		$dtb=$dtb."stock DESC";
-	 		$sankaku['date']="▲";
+	 		$sankaku['stock']="▲";
 		}
 	}
 	echo "da bam sort va dtb =".$dtb;
