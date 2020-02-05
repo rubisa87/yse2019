@@ -31,9 +31,9 @@ if(!@$_POST['search']){
 
 	if(@$_POST['nendai']){  $dtb = $dtb.$and."salesDate like '".$_POST['nendai']."%'"	;$and=" AND " 	;}
 
-	if(@$_POST['endai']){ $dtb=$dtb.$and."price>= ".$_POST['endai']." AND price<".($_POST['endai']+100)	;$and=" AND " 	;}
+	if(@$_POST['endai']){if($_POST['endai']>=1000){$dtb=$dtb.$and."price>= ".$_POST['endai']." AND price<".($_POST['endai']+1000);}else{ $dtb=$dtb.$and."price>= ".$_POST['endai']." AND price<".($_POST['endai']+100)	;$and=" AND " 	;}}
 
-	if(@$_POST['zaiko']){$dtb=$dtb.$and."stock< ".$_POST['zaiko']	;}
+	if(@$_POST['zaiko']){if($_POST['zaiko']>50){$dtb=$dtb.$and."stock> ".$_POST['zaiko']	;}else{$dtb=$dtb.$and."stock< ".$_POST['zaiko']	;}}
 // echo $dtb;   //debug 用
 $dtb_mae=$dtb;
 }
@@ -134,7 +134,7 @@ if(!@$_POST['sort']){
 							<td id="" ><input type="text" name="key"></td>
 							<td id="" ><select name="nendai"><?php echo "<option></option>"; foreach($saleDate as $date) {echo "<option value=".$date.">".$date."0年代</option>"; }?></select></td>
 							<td id="" ><select name="endai"><?php echo "<option></option>"; foreach($price as $price) {echo "<option value=".$price.">".$price."円代</option>"; }?></select></td>
-							<td id="" ><select name="zaiko"><?php echo "<option></option>"; foreach($stock as $stock) {echo "<option value=".$stock.">".$stock."冊未満</option>"; }echo "<option>".$stock."冊以上</option>";　?></select></td>
+							<td id="" ><select name="zaiko"><?php echo "<option></option>"; foreach($stock as $stock) {echo "<option value=".$stock.">".$stock."冊未満</option>"; }echo "<option value=".($stock+1).">".$stock."冊以上</option>";　?></select></td>
 						</tr>
 					</tbody>
 				</table>
