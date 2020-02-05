@@ -22,9 +22,9 @@ if ($_SESSION['login']==False){
 
 	// -----------------検索機能でデータベースに接続する文を作成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 if(!@$_POST['search']){
-	echo "chua bam search";
+	// echo "chua bam search"; //debug
 }else{
-	echo "da bam nut search<br>";
+	// echo "da bam nut search<br>";
 	if(@$_POST['nendai'] || @$_POST['endai']||@$_POST['zaiko']||@$_POST['key']){ $dtb = $dtb." where ";}
 
 	if(@$_POST['key']){  $dtb = $dtb."(title like '%".$_POST['key']."%' OR author like '%".$_POST['key']."%') "	;$and=" AND " 	;}
@@ -34,7 +34,7 @@ if(!@$_POST['search']){
 	if(@$_POST['endai']){ $dtb=$dtb.$and."price>= ".$_POST['endai']." AND price<".($_POST['endai']+100)	;$and=" AND " 	;}
 
 	if(@$_POST['zaiko']){$dtb=$dtb.$and."stock< ".$_POST['zaiko']	;}
-echo $dtb;
+// echo $dtb;   //debug 用
 $dtb_mae=$dtb;
 }
 
@@ -44,14 +44,14 @@ $ten="";
 $sankaku['date']=$sankaku['price']=$sankaku['stock']="▼";
 
 if(!@$_POST['sort']){
-	echo "chua bam sort va dtb la:".$dtb;
+	// echo "chua bam sort va dtb la:".$dtb;　//debug
 }else{  //sort dc bam
 	$dtb_mae=$dtb=$_POST['dtb'];
 	$dtb=$dtb." ORDER BY ";
 	$ten=" , ";
 
 	if($_POST['sort']=="date"){
-		echo "date button selected<br>";
+		// echo "date button selected<br>";
 		$count['date']=$_POST['count_date'];
 		$count['date']++;
 		if ($count['date']%2==0) {
@@ -79,7 +79,7 @@ if(!@$_POST['sort']){
 	 		$sankaku['stock']="▲";
 		}
 	}
-	echo "da bam sort va dtb =".$dtb;
+	// echo "da bam sort va dtb =".$dtb; //debug 用
 }
 
 	$st = $pdo->query($dtb);
@@ -172,7 +172,7 @@ if(!@$_POST['sort']){
 							<th id="id">ID</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
-							<th width ="10px" id="salesDate">発売日<button type="submit" formmethod="POST" name ="sort" value="date"><?php echo $sankaku["date"]; ?></button></th>
+							<th width ="100px" id="salesDate">発売日<button type="submit" formmethod="POST" name ="sort" value="date"><?php echo $sankaku["date"]; ?></button></th>
 							<th width ="80px" id="itemPrice">金額<button type="submit" formmethod="POST" name ="sort" value="price"><?php echo $sankaku["price"]; ?></button></th>
 							<th width ="120px" id="stock">在庫数<button type="submit" formmethod="POST" name ="sort" value="stock"><?php echo $sankaku["stock"]; ?></button></th>
 							<input type="hidden" name="dtb" value="<?php echo $dtb_mae;?>">
