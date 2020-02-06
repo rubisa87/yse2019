@@ -53,7 +53,7 @@ if (@($_POST["name"]) & @($_POST["pass"])) {
 
 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
 		$_SESSION['login'] = True;
-		$_SESSION['NAME'] =$name;
+		$_SESSION['NAME'] ="Duc Anh";
 		// session_regenerate_id(true);
 		header("Location: zaiko_ichiran.php");//⑩在庫一覧画面へ遷移する
 		exit();

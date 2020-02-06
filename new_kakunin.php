@@ -99,7 +99,7 @@ if($result){
 			</table>
 			<div id="kakunin">
 				<p>
-					上記の書籍を削除します。<br>
+					上記の書籍を追加します。<br>
 					よろしいですか？
 				</p>
 				<button type="submit" id="message" formmethod="POST" name="new" value="ok">はい</button>
