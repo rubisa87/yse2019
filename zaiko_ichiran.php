@@ -20,7 +20,7 @@ if ($_SESSION['login']==False){
 	$dtb_mae=$dtb="SELECT * FROM books ";
 	$and ="";
 
-	// -----------------検索機能でデータベースに接続する文を作成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+	// -----------------検索機能でデータベースに接続する文を作成 ーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 if(!@$_POST['search']){
 	// echo "chua bam search"; //debug
 }else{
@@ -39,9 +39,9 @@ $dtb_mae=$dtb;
 }
 
 // ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーソート機能でデータベースに接続する文を作成ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-$count['date']=$count['price']=$count['stock']=0;
+$count['id']=$count['book_name']=$count['author']=$count['date']=$count['price']=$count['stock']=0;
 $ten="";
-$sankaku['date']=$sankaku['price']=$sankaku['stock']="▼";
+$sankaku['date']=$sankaku['price']=$sankaku['stock']=$sankaku['id']=$sankaku['book_name']=$sankaku['author']="▼";
 
 if(!@$_POST['sort']){
 	// echo "chua bam sort va dtb la:".$dtb;　//debug
@@ -50,7 +50,38 @@ if(!@$_POST['sort']){
 	$dtb=$dtb." ORDER BY ";
 	$ten=" , ";
 
-	if($_POST['sort']=="date"){
+if($_POST['sort']=="id"){
+		// echo "date button selected<br>";
+		$count['id']=$_POST['count_id'];
+		$count['id']++;
+		echo "da bam sort id<br>";
+		if ($count['id']%2==0) {
+		 	$dtb=$dtb."id ASC";
+		}else{
+	 		$dtb=$dtb."id DESC";
+	 		$sankaku['id']="▲";
+	 	}
+	}else if($_POST['sort']=="book_name"){
+		// echo "date button selected<br>";
+		$count['book_name']=$_POST['count_book_name'];
+		$count['book_name']++;
+		if ($count['book_name']%2==0) {
+		 	$dtb=$dtb."title ASC";
+		}else{
+	 		$dtb=$dtb."title DESC";
+	 		$sankaku['book_name']="▲";
+	 	}
+	}else if($_POST['sort']=="author"){
+		// echo "date button selected<br>";
+		$count['author']=$_POST['count_author'];
+		$count['author']++;
+		if ($count['author']%2==0) {
+		 	$dtb=$dtb."author ASC";
+		}else{
+	 		$dtb=$dtb."author DESC";
+	 		$sankaku['author']="▲";
+	 	}
+	}else if($_POST['sort']=="date"){
 		// echo "date button selected<br>";
 		$count['date']=$_POST['count_date'];
 		$count['date']++;
@@ -79,7 +110,7 @@ if(!@$_POST['sort']){
 	 		$sankaku['stock']="▲";
 		}
 	}
-	// echo "da bam sort va dtb =".$dtb; //debug 用
+	echo "da bam sort va dtb =".$dtb; //debug 用
 }
 
 	$st = $pdo->query($dtb);
@@ -169,13 +200,16 @@ if(!@$_POST['sort']){
 					<thead>
 						<tr>
 							<th id="check"></th>
-							<th id="id">ID</th>
-							<th id="book_name">書籍名</th>
-							<th id="author">著者名</th>
+							<th id="id">ID<button type="submit" formmethod="POST" name ="sort" value="id"><?php echo $sankaku["id"]; ?></button></th>
+							<th id="book_name">書籍名<button type="submit" formmethod="POST" name ="sort" value="book_name"><?php echo $sankaku["book_name"]; ?></button></th>
+							<th id="author">著者名<button type="submit" formmethod="POST" name ="sort" value="author"><?php echo $sankaku["author"]; ?></button></th>
 							<th width ="100px" id="salesDate">発売日<button type="submit" formmethod="POST" name ="sort" value="date"><?php echo $sankaku["date"]; ?></button></th>
 							<th width ="80px" id="itemPrice">金額<button type="submit" formmethod="POST" name ="sort" value="price"><?php echo $sankaku["price"]; ?></button></th>
 							<th width ="120px" id="stock">在庫数<button type="submit" formmethod="POST" name ="sort" value="stock"><?php echo $sankaku["stock"]; ?></button></th>
 							<input type="hidden" name="dtb" value="<?php echo $dtb_mae;?>">
+							<input type="hidden" name="count_id" value="<?php echo $count['id'];?>">
+							<input type="hidden" name="count_book_name" value="<?php echo $count['book_name'];?>">
+							<input type="hidden" name="count_author" value="<?php echo $count['author'];?>">
 							<input type="hidden" name="count_date" value="<?php echo $count['date'];?>">
 							<input type="hidden" name="count_price" value="<?php echo $count['price'];?>">
 							<input type="hidden" name="count_stock" value="<?php echo $count['stock'];?>">
