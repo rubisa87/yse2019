@@ -135,15 +135,6 @@ if($_POST['sort']=="id"){
 
 			
 		<div id="pagebody">
-			<div id="error">
-				<?php
-				if(@($_SESSION["success"])){
-					//⑨SESSIONの「success」の中身を表示する。
-				echo $_SESSION["success"];
-				}
-				?>
-			</div>
-			
 
 			<div id="menu"><form>
 			<nav>
@@ -176,6 +167,13 @@ if($_POST['sort']=="id"){
 	</form>
 
 	</div>
+
+				<div id="error">
+				<?php
+					//⑨SESSIONの「success」の中身を表示する。
+				echo @$_SESSION["success"];
+				?>
+			</div>
 	
 			<!-- 中央表示 -->
 			<div id="center" >
